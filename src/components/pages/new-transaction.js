@@ -52,7 +52,7 @@ class NewTransaction extends React.Component {
   render() {
     let submit;
     let banks = [];
-    if (this.props.banks.banks) {
+    if (this.props.banks.banks.length > 0) {
       submit = <input type="submit" value="Add"/>;
       banks = this.props.banks.banks.map((bank, i) => {
         return(
