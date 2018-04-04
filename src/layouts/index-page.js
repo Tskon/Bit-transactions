@@ -21,22 +21,21 @@ class IndexPage extends React.Component {
   }
 
   render() {
+    if (!this.props.auth.user.isAuth) {
+      window.location = '/#/login';
+    }
 
-    console.log(this.props.auth.user.isAuth);
     let menu;
     if (this.props.auth.user.isAuth) menu = <Menu/>;
+
     return (
       <div className="container">
         {menu}
         <Switch>
-          <Route exact path='/' render={() => {
-            return (this.props.auth.user.isAuth) ? (<AllTransactions/>) : (<Redirect to="/login"/>);
-          }}/>
-          <Route path='/add' render={() => {
-            return (this.props.auth.user.isAuth) ? (<NewTransaction/>) : (<Redirect to="/login"/>);
-          }}/>
+          <Route exact path='/' component={AllTransactions}/>
+          <Route path='/add' component={NewTransaction}/>
           <Route path='/login' render={() => {
-            return (this.props.auth.user.isAuth) ? (<Redirect to="/"/>) : (<Auth/>);
+            return (!this.props.auth.user.isAuth) ? (<Auth/>) : (<Redirect to="/"/>);
           }}/>
         </Switch>
       </div>

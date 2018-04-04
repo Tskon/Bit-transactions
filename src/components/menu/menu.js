@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 import {logOut} from "~/actions/auth-actions";
 
 import MenuItem from '~/components/menu/menu-item';
@@ -12,7 +12,6 @@ class Menu extends React.Component {
   }
 
   logOutHandler(e) {
-    e.preventDefault();
     this.props.dispatch(logOut());
   }
 
@@ -36,9 +35,9 @@ class Menu extends React.Component {
       <div>
         <ul className="main-menu">
           {items}
-          <a href="#" onClick={this.logOutHandler}>
+          <Link to="/login" onClick={this.logOutHandler}>
             <li>Logout</li>
-          </a>
+          </Link>
         </ul>
       </div>
     );
