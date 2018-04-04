@@ -27325,6 +27325,8 @@ var _transactionReducer = __webpack_require__(124);
 
 var _bankReducer = __webpack_require__(125);
 
+var _authReducer = __webpack_require__(159);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var logger = (0, _reduxLogger.createLogger)({});
@@ -27339,7 +27341,8 @@ var middlewares = (0, _redux.applyMiddleware)(logger, (0, _reduxPromiseMiddlewar
 
 var reducers = (0, _redux.combineReducers)({
   transactions: _transactionReducer.transactionReducer,
-  banks: _bankReducer.bankReducer
+  banks: _bankReducer.bankReducer,
+  auth: _authReducer.authReducer
 });
 
 var store = (0, _redux.createStore)(reducers, middlewares);
@@ -27686,7 +27689,6 @@ function bankReducer() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -27697,6 +27699,10 @@ var _react2 = _interopRequireDefault(_react);
 var _reactRouterDom = __webpack_require__(7);
 
 var _reactRouter = __webpack_require__(127);
+
+var _reactRedux = __webpack_require__(17);
+
+var _authActions = __webpack_require__(158);
 
 var _menu = __webpack_require__(128);
 
@@ -27732,10 +27738,18 @@ var IndexPage = function (_React$Component) {
   }
 
   _createClass(IndexPage, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.dispatch((0, _authActions.getUser)());
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
+      console.log(this.props.auth.user.isAuth);
       var menu = void 0;
-      if (localStorage.login) menu = _react2.default.createElement(_menu2.default, null);
+      if (this.props.auth.user.isAuth) menu = _react2.default.createElement(_menu2.default, null);
       return _react2.default.createElement(
         'div',
         { className: 'container' },
@@ -27744,13 +27758,13 @@ var IndexPage = function (_React$Component) {
           _reactRouterDom.Switch,
           null,
           _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', render: function render() {
-              return localStorage.login ? _react2.default.createElement(_allTransactions2.default, null) : _react2.default.createElement(_reactRouter.Redirect, { to: '/login' });
+              return _this2.props.auth.user.isAuth ? _react2.default.createElement(_allTransactions2.default, null) : _react2.default.createElement(_reactRouter.Redirect, { to: '/login' });
             } }),
           _react2.default.createElement(_reactRouterDom.Route, { path: '/add', render: function render() {
-              return localStorage.login ? _react2.default.createElement(_newTransaction2.default, null) : _react2.default.createElement(_reactRouter.Redirect, { to: '/login' });
+              return _this2.props.auth.user.isAuth ? _react2.default.createElement(_newTransaction2.default, null) : _react2.default.createElement(_reactRouter.Redirect, { to: '/login' });
             } }),
           _react2.default.createElement(_reactRouterDom.Route, { path: '/login', render: function render() {
-              return localStorage.login ? _react2.default.createElement(_reactRouter.Redirect, { to: '/' }) : _react2.default.createElement(_auth2.default, null);
+              return _this2.props.auth.user.isAuth ? _react2.default.createElement(_reactRouter.Redirect, { to: '/' }) : _react2.default.createElement(_auth2.default, null);
             } })
         )
       );
@@ -27760,7 +27774,13 @@ var IndexPage = function (_React$Component) {
   return IndexPage;
 }(_react2.default.Component);
 
-exports.default = IndexPage;
+function mapStateToProps(state) {
+  return {
+    auth: state.auth
+  };
+}
+
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps)(IndexPage));
 
 /***/ }),
 /* 127 */
@@ -28025,13 +28045,13 @@ var Auth = function (_React$Component) {
   }, {
     key: 'changePasswordHandler',
     value: function changePasswordHandler(e) {
-      this.setState({ login: e.target.value });
+      this.setState({ password: e.target.value });
     }
   }, {
     key: 'loginHandler',
     value: function loginHandler() {
       if (this.state.login !== '' && this.state.password !== '') {
-        this.props.dispatch((0, _authActions.setUser)());
+        this.props.dispatch((0, _authActions.setUser)(this.state.login, this.state.password));
       } else {
         alert('empty login or password');
       }
@@ -29332,8 +29352,61 @@ function setUser(login, password) {
     }
   });
   return {
-    type: 'SET_USER'
+    type: 'SET_USER',
+    payload: {
+      login: login,
+      password: password
+    }
   };
+}
+
+/***/ }),
+/* 159 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.authReducer = authReducer;
+function authReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { user: {}, isFetching: false };
+  var action = arguments[1];
+
+  switch (action.type) {
+    case 'GET_USER_PENDING':
+      {
+        state = _extends({}, state, { isFetching: true });
+        break;
+      }
+    case 'GET_USER_FULFILLED':
+      {
+        state = _extends({}, state, { isFetching: false, user: _extends({}, action.payload.data) });
+        break;
+      }
+    case 'GET_USER_REJECTED':
+      {
+        state = _extends({}, state, { isFetching: false, errorMessage: action.payload.message });
+        break;
+      }
+    case 'LOG_OUT':
+      {
+        state = _extends({}, state, { user: { isAuth: false } });
+        break;
+      }
+    case 'SET_USER':
+      {
+        state = _extends({}, state, { user: _extends({}, action.payload, { isAuth: true }) });
+        break;
+      }
+  }
+
+  return state;
 }
 
 /***/ })

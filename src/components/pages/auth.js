@@ -21,12 +21,12 @@ class Auth extends React.Component {
   }
 
   changePasswordHandler(e){
-    this.setState({login: e.target.value});
+    this.setState({password: e.target.value});
   }
 
   loginHandler() {
     if (this.state.login !== '' && this.state.password !== '') {
-      this.props.dispatch(setUser());
+      this.props.dispatch(setUser(this.state.login, this.state.password ));
     } else {
       alert('empty login or password');
     }

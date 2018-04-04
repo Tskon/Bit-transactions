@@ -5,7 +5,7 @@ export function authReducer(state = {user: {}, isFetching: false}, action) {
       break;
     }
     case 'GET_USER_FULFILLED': {
-      state = {...state, isFetching: false, user: {...action.payload.data, isAuth: true}};
+      state = {...state, isFetching: false, user: {...action.payload.data}};
       break;
     }
     case 'GET_USER_REJECTED': {
@@ -16,9 +16,10 @@ export function authReducer(state = {user: {}, isFetching: false}, action) {
       state = {...state, user: {isAuth: false}};
       break;
     }
-    // case 'SET_USER': {
-    //   break;
-    // }
+    case 'SET_USER': {
+      state = {...state, user: {...action.payload, isAuth: true}};
+      break;
+    }
   }
 
   return state;

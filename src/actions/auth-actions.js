@@ -22,6 +22,10 @@ export function setUser(login, password) {
     }
   });
   return {
-    type: 'SET_USER'
+    type: 'SET_USER',
+    payload: {
+      login: login,
+      password: password
+    }
   }
 }
