@@ -6,6 +6,8 @@ const transactionList = [
   {id: 1, amount: 100, bankId: 1}, {id: 2, amount: 200, bankId: 2}, {id: 3, amount: 300, bankId: 3}
 ];
 
+let user = {};
+
 app
   .post('/get/banks', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -32,7 +34,7 @@ app
         bankId: +req.query.bankId
       }
     );
-    
+
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
     res.send('');
@@ -44,6 +46,29 @@ app
         arr.splice(i, 1);
       }
     });
+
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
+    res.send('');
+  })
+
+  .get('/get/user', (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
+    res.json(user);
+  })
+
+  .get('/set/user', (req, res) => {
+    user.login = req.query.login;
+    user.password = req.query.password;
+
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
+    res.send('');
+  })
+
+  .get('/logout', (req, res) => {
+    user = {};
 
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');

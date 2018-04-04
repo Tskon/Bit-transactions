@@ -27823,6 +27823,10 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRedux = __webpack_require__(17);
+
+var _reactRouterDom = __webpack_require__(7);
+
 var _menuItem = __webpack_require__(129);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
@@ -28120,7 +28124,7 @@ var NewTransaction = function (_React$Component) {
     value: function render() {
       var submit = void 0;
       var banks = [];
-      if (this.props.banks.banks) {
+      if (this.props.banks.banks.length > 0) {
         submit = _react2.default.createElement('input', { type: 'submit', value: 'Add' });
         banks = this.props.banks.banks.map(function (bank, i) {
           return _react2.default.createElement(
