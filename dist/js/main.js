@@ -27835,7 +27835,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -27846,6 +27845,8 @@ var _react2 = _interopRequireDefault(_react);
 var _reactRedux = __webpack_require__(17);
 
 var _reactRouterDom = __webpack_require__(7);
+
+var _authActions = __webpack_require__(158);
 
 var _menuItem = __webpack_require__(129);
 
@@ -27875,8 +27876,7 @@ var Menu = function (_React$Component) {
     key: 'logOutHandler',
     value: function logOutHandler(e) {
       e.preventDefault();
-      localStorage.clear();
-      location.reload();
+      this.props.dispatch((0, _authActions.logOut)());
     }
   }, {
     key: 'render',
@@ -27917,7 +27917,7 @@ var Menu = function (_React$Component) {
   return Menu;
 }(_react2.default.Component);
 
-exports.default = Menu;
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)()(Menu));
 
 /***/ }),
 /* 129 */

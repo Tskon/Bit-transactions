@@ -18,10 +18,10 @@ class IndexPage extends React.Component {
 
   componentDidMount(){
     this.props.dispatch(getUser());
-
   }
 
   render() {
+
     console.log(this.props.auth.user.isAuth);
     let menu;
     if (this.props.auth.user.isAuth) menu = <Menu/>;

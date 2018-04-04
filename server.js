@@ -63,8 +63,6 @@ app
     user.password = req.query.password;
     user.isAuth = true;
 
-    console.log(user);
-
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
     res.send('');

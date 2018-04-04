@@ -1,10 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
+import {logOut} from "~/actions/auth-actions";
 
 import MenuItem from '~/components/menu/menu-item';
 
-export default class Menu extends React.Component {
+class Menu extends React.Component {
   constructor() {
     super(...arguments);
     this.logOutHandler = this.logOutHandler.bind(this);
@@ -12,8 +13,7 @@ export default class Menu extends React.Component {
 
   logOutHandler(e) {
     e.preventDefault();
-    localStorage.clear();
-    location.reload();
+    this.props.dispatch(logOut());
   }
 
   render() {
@@ -44,3 +44,5 @@ export default class Menu extends React.Component {
     );
   }
 }
+
+export default withRouter(connect()(Menu));
