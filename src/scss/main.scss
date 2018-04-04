@@ -1,0 +1,18 @@
+@import "~normalize.css";
+@import "main-menu";
+@import "auth";
+@import "new-transaction";
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

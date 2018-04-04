@@ -1,0 +1,26 @@
+.main-menu {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  a {
+    margin-right: 15px;
+  }
+}
+
+.main-menu__li {
+  text-decoration: underline;
+  padding: 5px;
+}
+
+.main-menu__item_active {
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 10px;
+  cursor: default;
+  .main-menu__li {
+    color: #000;
+    text-decoration: none;
+  }
+}

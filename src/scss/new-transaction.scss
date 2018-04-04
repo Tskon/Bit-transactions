@@ -1,0 +1,9 @@
+.new-transaction input, select {
+  display: block;
+  width: 200px;
+  margin: 0 10px 5px;
+}
+
+.new-transaction input[type='button'] {
+  cursor: pointer;
+}
