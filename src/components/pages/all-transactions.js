@@ -11,8 +11,6 @@ class AllTransactions extends React.Component {
     super(...arguments);
     this.props.dispatch(fetchTransactions());
     this.props.dispatch(fetchBanks());
-
-
   }
 
   render() {
