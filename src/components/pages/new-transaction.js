@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {fetchBanks} from "~/actions/bank-actions";
 // import {addTransaction} from "~/actions/transaction-actions";
-import {withRouter} from 'react-router-dom'
+import {withRouter} from 'react-router-dom';
 import axios from 'axios';
 
 class NewTransaction extends React.Component {

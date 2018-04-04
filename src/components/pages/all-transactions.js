@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {fetchTransactions, delTransaction} from "~/actions/transaction-actions";
 import {fetchBanks} from "~/actions/bank-actions";
-import {withRouter} from 'react-router-dom'
+import {withRouter} from 'react-router-dom';
 
 import Transaction from '~/components/pages/transaction';
 

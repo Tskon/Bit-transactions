@@ -1,24 +1,48 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
+import {setUser} from "~/actions/auth-actions";
 
-export default class Auth extends React.Component {
+class Auth extends React.Component {
+  constructor() {
+    super(...arguments);
+    this.state = {
+      login: '',
+      password: ''
+    }
+
+    this.loginHandler = this.loginHandler.bind(this);
+    this.changeLoginHandler = this.changeLoginHandler.bind(this);
+    this.changePasswordHandler = this.changePasswordHandler.bind(this);
+  }
+
+  changeLoginHandler(e){
+    this.setState({login: e.target.value});
+  }
+
+  changePasswordHandler(e){
+    this.setState({login: e.target.value});
+  }
+
+  loginHandler() {
+    if (this.state.login !== '' && this.state.password !== '') {
+      this.props.dispatch(setUser());
+    } else {
+      alert('empty login or password');
+    }
+  }
+
   render() {
     return (
       <div className="auth">
-        <input type="login" placeholder="Login"/>
-        <input type="password" placeholder="Password"/>
-        <input type="button" value="Enter" onClick={() => {
-          const login = document.querySelector('input[type="login"]');
-          const password = document.querySelector('input[type="password"]');
-          if (login.value !== '' && password.value !== '') {
-            localStorage.setItem('login', login.value);
-            localStorage.setItem('password', password.value);
-            location.reload();
-          } else {
-            alert('empty login or password');
-          }
-        }
-        }/>
+        <form onSubmit={this.loginHandler}>
+          <input type="login" placeholder="Login" onChange={this.changeLoginHandler}/>
+          <input type="password" placeholder="Password" onChange={this.changePasswordHandler}/>
+          <input type="submit" value="Enter"/>
+        </form>
       </div>
     )
   }
 }
+
+export default withRouter(connect()(Auth));

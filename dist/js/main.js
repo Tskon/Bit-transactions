@@ -27977,13 +27977,18 @@ exports.default = MenuItem;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(17);
+
+var _reactRouterDom = __webpack_require__(7);
+
+var _authActions = __webpack_require__(158);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27999,28 +28004,51 @@ var Auth = function (_React$Component) {
   function Auth() {
     _classCallCheck(this, Auth);
 
-    return _possibleConstructorReturn(this, (Auth.__proto__ || Object.getPrototypeOf(Auth)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Auth.__proto__ || Object.getPrototypeOf(Auth)).apply(this, arguments));
+
+    _this.state = {
+      login: '',
+      password: ''
+    };
+
+    _this.loginHandler = _this.loginHandler.bind(_this);
+    _this.changeLoginHandler = _this.changeLoginHandler.bind(_this);
+    _this.changePasswordHandler = _this.changePasswordHandler.bind(_this);
+    return _this;
   }
 
   _createClass(Auth, [{
-    key: "render",
+    key: 'changeLoginHandler',
+    value: function changeLoginHandler(e) {
+      this.setState({ login: e.target.value });
+    }
+  }, {
+    key: 'changePasswordHandler',
+    value: function changePasswordHandler(e) {
+      this.setState({ login: e.target.value });
+    }
+  }, {
+    key: 'loginHandler',
+    value: function loginHandler() {
+      if (this.state.login !== '' && this.state.password !== '') {
+        this.props.dispatch((0, _authActions.setUser)());
+      } else {
+        alert('empty login or password');
+      }
+    }
+  }, {
+    key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        "div",
-        { className: "auth" },
-        _react2.default.createElement("input", { type: "login", placeholder: "Login" }),
-        _react2.default.createElement("input", { type: "password", placeholder: "Password" }),
-        _react2.default.createElement("input", { type: "button", value: "Enter", onClick: function onClick() {
-            var login = document.querySelector('input[type="login"]');
-            var password = document.querySelector('input[type="password"]');
-            if (login.value !== '' && password.value !== '') {
-              localStorage.setItem('login', login.value);
-              localStorage.setItem('password', password.value);
-              location.reload();
-            } else {
-              alert('empty login or password');
-            }
-          } })
+        'div',
+        { className: 'auth' },
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.loginHandler },
+          _react2.default.createElement('input', { type: 'login', placeholder: 'Login', onChange: this.changeLoginHandler }),
+          _react2.default.createElement('input', { type: 'password', placeholder: 'Password', onChange: this.changePasswordHandler }),
+          _react2.default.createElement('input', { type: 'submit', value: 'Enter' })
+        )
       );
     }
   }]);
@@ -28028,7 +28056,7 @@ var Auth = function (_React$Component) {
   return Auth;
 }(_react2.default.Component);
 
-exports.default = Auth;
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)()(Auth));
 
 /***/ }),
 /* 131 */
@@ -29257,6 +29285,56 @@ exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)()(Tra
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getUser = getUser;
+exports.logOut = logOut;
+exports.setUser = setUser;
+
+var _axios = __webpack_require__(57);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function getUser() {
+  return {
+    type: 'GET_USER',
+    payload: _axios2.default.get('http://localhost:8090/get/user')
+  };
+}
+
+function logOut() {
+  _axios2.default.get('http://localhost:8090/logout');
+  return {
+    type: 'LOG_OUT'
+  };
+}
+
+function setUser(login, password) {
+  _axios2.default.get('http://localhost:8090/set/user', {
+    params: {
+      login: login,
+      password: password
+    }
+  });
+  return {
+    type: 'SET_USER'
+  };
+}
 
 /***/ })
 /******/ ]);
