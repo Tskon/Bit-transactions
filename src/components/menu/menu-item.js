@@ -9,7 +9,8 @@ export default class MenuItem extends React.Component {
   }
   render() {
     return (
-      <NavLink isActive={()=>{return this.isActiveFunc(this.props.data.link)}} activeClassName="main-menu__item_active" to={this.props.data.link}>
+      <NavLink isActive={()=>{return this.isActiveFunc(this.props.data.link)}} activeClassName="main-menu__item_active"
+               to={this.props.data.link}>
         <li className="main-menu__li">
           {this.props.data.title}
         </li>

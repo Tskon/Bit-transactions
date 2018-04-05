@@ -12,32 +12,41 @@ import AllTransactions from '~/components/pages/all-transactions';
 
 
 class IndexPage extends React.Component {
-  constructor(){
+  constructor() {
     super(...arguments);
   }
 
-  componentDidMount(){
+  componentWillMount() {
     this.props.dispatch(getUser());
   }
 
   render() {
-        let menu;
+    let menu;
     if (this.props.auth.user.isAuth) menu = <Menu/>;
+
+    let routes;
+    if (this.props.auth.user.isAuth) {
+      routes = (
+        <Switch>
+          <Route exact path='/' component={AllTransactions}/>
+          <Route path='/add' component={NewTransaction}/>
+          <Route path='/' render={() => {return (<Redirect to="/"/>)}}/>
+        </Switch>
+      )
+    } else {
+      routes = (
+      <Switch>
+        <Route path='/' render={() => {
+          return (!this.props.auth.user.isAuth) ? (<Auth/>) : (<Redirect to="/"/>);
+        }}/>
+      </Switch>
+      );
+    }
 
     return (
       <div className="container">
         {menu}
-        <Switch>
-          <Route exact path='/' render={() => {
-            return (this.props.auth.user.isAuth) ? (<AllTransactions/>) : (<Redirect to="/login"/>);
-          }}/>
-          <Route path='/add' render={() => {
-            return (this.props.auth.user.isAuth) ? (<NewTransaction/>) : (<Redirect to="/login"/>);
-          }}/>
-          <Route path='/login' render={() => {
-            return (!this.props.auth.user.isAuth) ? (<Auth/>) : (<Redirect to="/"/>);
-          }}/>
-        </Switch>
+        {routes}
       </div>
     )
   }
