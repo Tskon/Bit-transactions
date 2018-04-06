@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {withRouter, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {logOut} from "~/actions/auth-actions";
 
 import MenuItem from '~/components/menu/menu-item';
@@ -44,4 +44,4 @@ class Menu extends React.Component {
   }
 }
 
-export default withRouter(connect()(Menu));
+export default connect()(Menu);

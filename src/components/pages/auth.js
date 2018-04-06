@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
 import {setUser} from "~/actions/auth-actions";
 
 class Auth extends React.Component {
@@ -45,4 +44,4 @@ class Auth extends React.Component {
   }
 }
 
-export default withRouter(connect()(Auth));
+export default connect()(Auth);
