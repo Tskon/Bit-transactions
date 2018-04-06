@@ -26696,7 +26696,7 @@ function authReducer() {
       }
     case 'SET_USER_FULFILLED':
       {
-        state = _extends({}, state, { user: _extends({}, action.payload, { isAuth: true }) });
+        state = _extends({}, state, { isFetching: false, user: _extends({}, action.payload, { isAuth: true }) });
         break;
       }
     case 'SET_USER_REJECTED':

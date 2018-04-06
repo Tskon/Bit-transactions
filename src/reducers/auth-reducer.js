@@ -29,7 +29,7 @@ export function authReducer(state = {user: {}, isFetching: false}, action) {
       break;
     }
     case 'SET_USER_FULFILLED': {
-      state = {...state, user: {...action.payload, isAuth: true}};
+      state = {...state, isFetching: false, user: {...action.payload, isAuth: true}};
       break;
     }
     case 'SET_USER_REJECTED': {
