@@ -2179,26 +2179,21 @@ function getUser() {
 }
 
 function logOut() {
-  _axios2.default.get('http://localhost:8090/logout');
   return {
-    type: 'LOG_OUT'
+    type: 'LOG_OUT',
+    payload: _axios2.default.get('http://localhost:8090/logout')
   };
 }
 
 function setUser(login, password) {
-  _axios2.default.get('http://localhost:8090/set/user', {
-    params: {
-      login: login,
-      password: password
-    }
-  });
-
   return {
     type: 'SET_USER',
-    payload: {
-      login: login,
-      password: password
-    }
+    payload: _axios2.default.get('http://localhost:8090/set/user', {
+      params: {
+        login: login,
+        password: password
+      }
+    })
   };
 }
 
@@ -26679,14 +26674,34 @@ function authReducer() {
         state = _extends({}, state, { isFetching: false, errorMessage: action.payload.message });
         break;
       }
-    case 'LOG_OUT':
+    case 'LOG_OUT_PENDING':
       {
-        state = _extends({}, state, { user: { isAuth: false } });
+        state = _extends({}, state, { isFetching: true });
         break;
       }
-    case 'SET_USER':
+    case 'LOG_OUT_FULFILLED':
+      {
+        state = _extends({}, state, { isFetching: false, user: { isAuth: false } });
+        break;
+      }
+    case 'LOG_OUT_REJECTED':
+      {
+        state = _extends({}, state, { isFetching: false, errorMessage: action.payload.message });
+        break;
+      }
+    case 'SET_USER_PENDING':
+      {
+        state = _extends({}, state, { isFetching: true });
+        break;
+      }
+    case 'SET_USER_FULFILLED':
       {
         state = _extends({}, state, { user: _extends({}, action.payload, { isAuth: true }) });
+        break;
+      }
+    case 'SET_USER_REJECTED':
+      {
+        state = _extends({}, state, { isFetching: false, errorMessage: action.payload.message });
         break;
       }
   }

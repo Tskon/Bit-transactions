@@ -8,7 +8,7 @@ class Auth extends React.Component {
     this.state = {
       login: '',
       password: ''
-    }
+    };
 
     this.loginHandler = this.loginHandler.bind(this);
     this.changeLoginHandler = this.changeLoginHandler.bind(this);
