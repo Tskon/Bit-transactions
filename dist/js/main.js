@@ -2335,27 +2335,25 @@ function fetchTransactions() {
 }
 
 function delTransaction(id) {
-  _axios2.default.get('http://localhost:8090/del/transaction', {
-    params: {
-      id: id
-    }
-  });
   return {
     type: 'DEL_TRANSACTION',
-    payload: id
+    payload: _axios2.default.get('http://localhost:8090/del/transaction', {
+      params: {
+        id: id
+      }
+    })
   };
 }
 
 function addTransaction(obj) {
-  _axios2.default.get('http://localhost:8090/add/transaction', {
-    params: {
-      amount: obj.amount,
-      bankId: obj.bankId
-    }
-  });
   return {
     type: 'ADD_TRANSACTION',
-    payload: obj
+    payload: _axios2.default.get('http://localhost:8090/add/transaction', {
+      params: {
+        amount: obj.amount,
+        bankId: obj.bankId
+      }
+    })
   };
 }
 
@@ -26551,9 +26549,6 @@ Object.defineProperty(exports, "__esModule", {
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 exports.transactionReducer = transactionReducer;
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function transactionReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { transactions: [], isFetching: false };
   var action = arguments[1];
@@ -26574,24 +26569,39 @@ function transactionReducer() {
         state = _extends({}, state, { isFetching: false, errorMessage: action.payload.message });
         break;
       }
-    case 'DEL_TRANSACTION':
+
+    case 'DEL_TRANSACTION_PENDING':
       {
-        var transactions = [].concat(_toConsumableArray(state.transactions));
-        transactions.forEach(function (item, i, arr) {
-          if (item.id === action.payload) arr.splice(i, 1);
-        });
-        state = _extends({}, state, { transactions: transactions });
+        state = _extends({}, state, { isFetching: true });
         break;
       }
-    // case 'ADD_TRANSACTION': {
-    //   const transactions = [...state.transactions];
-    //   transactions.push({
-    //     ...action.payload,
-    //     id: (transactions.length > 0) ? transactions[transactions.length - 1].id + 1 : 1
-    //   });
-    //   state = {...state, transactions};
-    //   break;
-    // }
+    case 'DEL_TRANSACTION_FULFILLED':
+      {
+        state = _extends({}, state, { isFetching: false, transactions: action.payload.data });
+        break;
+      }
+    case 'DEL_TRANSACTION_REJECTED':
+      {
+        state = _extends({}, state, { isFetching: false, errorMessage: action.payload.message });
+        break;
+      }
+
+    case 'ADD_TRANSACTION_PENDING':
+      {
+        state = _extends({}, state, { isFetching: true });
+        break;
+      }
+    case 'ADD_TRANSACTION_FULFILLED':
+      {
+        console.log(action.payload.data);
+        state = _extends({}, state, { isFetching: false, transactions: action.payload.data });
+        break;
+      }
+    case 'ADD_TRANSACTION_REJECTED':
+      {
+        state = _extends({}, state, { isFetching: false, errorMessage: action.payload.message });
+        break;
+      }
   }
 
   return state;
@@ -26674,6 +26684,7 @@ function authReducer() {
         state = _extends({}, state, { isFetching: false, errorMessage: action.payload.message });
         break;
       }
+
     case 'LOG_OUT_PENDING':
       {
         state = _extends({}, state, { isFetching: true });
@@ -26689,6 +26700,7 @@ function authReducer() {
         state = _extends({}, state, { isFetching: false, errorMessage: action.payload.message });
         break;
       }
+
     case 'SET_USER_PENDING':
       {
         state = _extends({}, state, { isFetching: true });
@@ -26764,15 +26776,13 @@ var IndexPage = function (_React$Component) {
   function IndexPage() {
     _classCallCheck(this, IndexPage);
 
-    return _possibleConstructorReturn(this, (IndexPage.__proto__ || Object.getPrototypeOf(IndexPage)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (IndexPage.__proto__ || Object.getPrototypeOf(IndexPage)).apply(this, arguments));
+
+    _this.props.dispatch((0, _authActions.getUser)());
+    return _this;
   }
 
   _createClass(IndexPage, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-      this.props.dispatch((0, _authActions.getUser)());
-    }
-  }, {
     key: 'render',
     value: function render() {
       var menu = void 0,

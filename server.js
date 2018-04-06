@@ -37,7 +37,7 @@ app
 
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
-    res.send('');
+    res.send(transactionList);
   })
 
   .get('/del/transaction', (req, res) => {
@@ -49,7 +49,7 @@ app
 
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
-    res.send('');
+    res.send(transactionList);
   })
 
   .get('/get/user', (req, res) => {

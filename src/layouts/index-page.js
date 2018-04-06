@@ -14,9 +14,6 @@ import AllTransactions from '~/components/pages/all-transactions';
 class IndexPage extends React.Component {
   constructor() {
     super(...arguments);
-  }
-
-  componentWillMount() {
     this.props.dispatch(getUser());
   }
 

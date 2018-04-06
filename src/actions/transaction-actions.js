@@ -8,26 +8,24 @@ export function fetchTransactions() {
 }
 
 export function delTransaction(id) {
-  axios.get('http://localhost:8090/del/transaction', {
-    params: {
-      id: id
-    }
-  });
   return {
     type: 'DEL_TRANSACTION',
-    payload: id
+    payload: axios.get('http://localhost:8090/del/transaction', {
+      params: {
+        id: id
+      }
+    })
   }
 }
 
 export function addTransaction(obj) {
-  axios.get('http://localhost:8090/add/transaction', {
-    params: {
-      amount: obj.amount,
-      bankId: obj.bankId
-    }
-  });
   return {
     type: 'ADD_TRANSACTION',
-    payload: obj
+    payload: axios.get('http://localhost:8090/add/transaction', {
+      params: {
+        amount: obj.amount,
+        bankId: obj.bankId
+      }
+    })
   }
 }
