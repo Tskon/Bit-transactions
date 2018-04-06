@@ -21,11 +21,11 @@ class IndexPage extends React.Component {
   }
 
   render() {
-    let menu;
-    if (this.props.auth.user.isAuth) menu = <Menu/>;
+    let menu,
+      routes;
 
-    let routes;
     if (this.props.auth.user.isAuth) {
+      menu = <Menu/>;
       routes = (
         <Switch>
           <Route exact path='/' component={AllTransactions}/>
@@ -36,9 +36,7 @@ class IndexPage extends React.Component {
     } else {
       routes = (
       <Switch>
-        <Route path='/' render={() => {
-          return (!this.props.auth.user.isAuth) ? (<Auth/>) : (<Redirect to="/"/>);
-        }}/>
+        <Route path='/' component={Auth}/>
       </Switch>
       );
     }
