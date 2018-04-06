@@ -19,15 +19,15 @@ export function delTransaction(id) {
   }
 }
 
-// export function addTransaction(obj) {
-//   axios.get('http://localhost:8090/add/transaction', {
-//     params: {
-//       amount: obj.amount,
-//       bankId: obj.bankId
-//     }
-//   });
-//   return {
-//     type: 'ADD_TRANSACTION',
-//     payload: obj
-//   }
-// }
+export function addTransaction(obj) {
+  axios.get('http://localhost:8090/add/transaction', {
+    params: {
+      amount: obj.amount,
+      bankId: obj.bankId
+    }
+  });
+  return {
+    type: 'ADD_TRANSACTION',
+    payload: obj
+  }
+}
