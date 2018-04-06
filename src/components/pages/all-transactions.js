@@ -18,7 +18,7 @@ class AllTransactions extends React.Component {
 
     if (this.props.transactions.transactions && this.props.banks.banks) {
       transactions = this.props.transactions.transactions.map((item, i) => {
-        let bankName = this.props.banks.banks[item.bankId] || 'Unknown Bank';
+        let bankName = this.props.banks.banks[item.bankId] || 'Bank ID: ' + item.bankId;
         return <Transaction key={i} {...item} bankName={bankName}/>
       });
     }
