@@ -2,11 +2,10 @@ import {createStore, combineReducers, applyMiddleware} from 'redux';
 
 // middlewares
 import promise from 'redux-promise-middleware';
-import thunk from 'redux-thunk';
 import {createLogger} from "redux-logger";
 const logger = createLogger({});
 
-const middlewares = applyMiddleware(logger, promise(), thunk);
+const middlewares = applyMiddleware(logger, promise());
 
 //reducers
 import {transactionReducer} from '~/reducers/transaction-reducer';

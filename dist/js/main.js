@@ -26295,8 +26295,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // middlewares
 var logger = (0, _reduxLogger.createLogger)({});
-// import thunk from 'redux-thunk';
-
 
 var middlewares = (0, _redux.applyMiddleware)(logger, (0, _reduxPromiseMiddleware2.default)());
 

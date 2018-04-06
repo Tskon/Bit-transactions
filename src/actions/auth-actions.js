@@ -21,6 +21,7 @@ export function setUser(login, password) {
       password: password
     }
   });
+
   return {
     type: 'SET_USER',
     payload: {
