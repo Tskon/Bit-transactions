@@ -2198,6 +2198,7 @@ function setUser(login, password) {
       password: password
     }
   });
+
   return {
     type: 'SET_USER',
     payload: {
@@ -28992,8 +28993,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(8);
 
-var _reactRouterDom = __webpack_require__(6);
-
 var _authActions = __webpack_require__(29);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -29062,7 +29061,7 @@ var Auth = function (_React$Component) {
   return Auth;
 }(_react2.default.Component);
 
-exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)()(Auth));
+exports.default = (0, _reactRedux.connect)()(Auth);
 
 /***/ }),
 /* 151 */
@@ -29333,8 +29332,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(8);
 
-var _reactRouterDom = __webpack_require__(6);
-
 var _transactionActions = __webpack_require__(63);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -29400,7 +29397,7 @@ var Transaction = function (_React$Component) {
   return Transaction;
 }(_react2.default.Component);
 
-exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)()(Transaction));
+exports.default = (0, _reactRedux.connect)()(Transaction);
 
 /***/ }),
 /* 154 */
