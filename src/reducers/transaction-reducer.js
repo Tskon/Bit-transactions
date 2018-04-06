@@ -31,7 +31,6 @@ export function transactionReducer(state = {transactions: [], isFetching: false}
       break;
     }
     case 'ADD_TRANSACTION_FULFILLED': {
-      console.log(action.payload.data);
       state = {...state, isFetching: false, transactions: action.payload.data};
       break;
     }
