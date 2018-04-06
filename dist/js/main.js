@@ -26687,7 +26687,7 @@ function authReducer() {
 
     case 'LOG_OUT_PENDING':
       {
-        state = _extends({}, state, { isFetching: true });
+        state = _extends({}, state, { isFetching: true, user: { isAuth: false } });
         break;
       }
     case 'LOG_OUT_FULFILLED':
@@ -26697,7 +26697,7 @@ function authReducer() {
       }
     case 'LOG_OUT_REJECTED':
       {
-        state = _extends({}, state, { isFetching: false, errorMessage: action.payload.message });
+        state = _extends({}, state, { isFetching: false, errorMessage: action.payload.message, user: { isAuth: false } });
         break;
       }
 
