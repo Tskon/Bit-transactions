@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
 
 import {delTransaction} from "~/actions/transaction-actions";
 
@@ -30,4 +29,4 @@ class Transaction extends React.Component {
   }
 }
 
-export default withRouter(connect()(Transaction));
+export default connect()(Transaction);
