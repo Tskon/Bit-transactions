@@ -52,15 +52,24 @@ class NewTransaction extends React.Component {
   render() {
     let submit;
     let banks = [];
-    if (this.props.banks.banks.length > 0) {
+    if (Object.keys(this.props.banks.banks).length  > 0) {
       submit = <input type="submit" value="Add"/>;
-      banks = this.props.banks.banks.map((bank, i) => {
-        return(
-          <option key={i} value={bank.id}>
-            {bank.name}
+
+      for (let bankId in this.props.banks.banks){
+        banks.push(
+          <option key={bankId} value={bankId}>
+            {this.props.banks.banks[bankId]}
           </option>
-          )
-      });
+        )
+      }
+
+      // banks = this.props.banks.banks.map((bank, i) => {
+      //   return(
+      //     <option key={i} value={bank.id}>
+      //       {bank.name}
+      //     </option>
+      //     )
+      // });
     }
 
     return (

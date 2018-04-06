@@ -5,7 +5,11 @@ export function bankReducer(state = {banks: [], isFetching: false}, action) {
       break;
     }
     case 'FETCH_BANKS_FULFILLED': {
-      state = {...state, isFetching: false, banks: action.payload.data};
+      let banks = {};
+      action.payload.data.forEach((bank) => {
+        if (bank.id && bank.name) banks[bank.id] = bank.name;
+      });
+      state = {...state, isFetching: false, banks: banks};
       break;
     }
     case 'FETCH_BANKS_REJECTED': {
